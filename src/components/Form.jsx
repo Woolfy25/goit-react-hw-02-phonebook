@@ -3,8 +3,6 @@ import css from './Form.module.css';
 import { nanoid } from 'nanoid';
 import Contacts from './Contacts';
 
-import PropTypes from 'prop-types';
-
 class Form extends React.Component {
   constructor() {
     super();
@@ -75,7 +73,5 @@ class Form extends React.Component {
     );
   }
 }
-
-Form.propTypes = {};
 
 export default Form;

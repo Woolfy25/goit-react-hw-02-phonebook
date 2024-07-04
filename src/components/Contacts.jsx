@@ -1,5 +1,5 @@
 import React from 'react';
-import css from './Form.module.css';
+// import css from './Form.module.css';
 import PropTypes from 'prop-types';
 
 const Contacts = ({ titleName, contacts, ids }) => {
@@ -19,8 +19,6 @@ const Contacts = ({ titleName, contacts, ids }) => {
 
 Contacts.propTypes = {
   titleName: PropTypes.string.isRequired,
-  //   ids: PropTypes.string.isRequired,
-  //   contacts: PropTypes.string.isRequired,
 };
 
 export default Contacts;
