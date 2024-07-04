@@ -10,10 +10,12 @@ class Form extends React.Component {
       contacts: [],
       name: '',
       number: '',
+      filter: '',
     };
   }
   nameLabelID = nanoid();
   numberLabelID = nanoid();
+  filterLabelID = nanoid();
 
   handleNameChange = event => {
     this.setState({ name: event.target.value });
@@ -23,10 +25,21 @@ class Form extends React.Component {
     this.setState({ number: event.target.value });
   };
 
+  handleFilterChange = event => {
+    this.setState({ filter: event.target.value });
+  };
+
   handleSubmit = event => {
     event.preventDefault();
     const { name, number, contacts } = this.state;
-    if (name && number) {
+
+    const duplicateContact = contacts.find(
+      contact => contact.name.toLowerCase() === name.toLowerCase()
+    );
+
+    if (duplicateContact) {
+      alert(`${name} is already in your contact list.`);
+    } else {
       const newContact = {
         id: nanoid(),
         name,
@@ -40,10 +53,24 @@ class Form extends React.Component {
     }
   };
 
+  getFilteredContacts = () => {
+    const { contacts, filter } = this.state;
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filter.toLowerCase())
+    );
+  };
+
+  handleDelete = id => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== id),
+    }));
+  };
+
   render() {
-    const { contacts } = this.state;
+    const { filter } = this.state;
+    const filteredContacts = this.getFilteredContacts();
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit} className={css.form}>
         <label htmlFor={this.nameLabelID}>Name</label>
         <input
           className={css.userName}
@@ -57,6 +84,7 @@ class Form extends React.Component {
         />
         <label htmlFor={this.numberLabelID}>Number</label>
         <input
+          className={css.userName}
           type="tel"
           name={this.numberLabelID}
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
@@ -67,7 +95,22 @@ class Form extends React.Component {
         />
         <button type="submit">Submit</button>
 
-        <Contacts titleName={'Contacts'} contacts={contacts} />
+        <label htmlFor={this.filterLabelID} className={css.userName}>
+          Search
+        </label>
+        <input
+          className={css.userName}
+          type="text"
+          name="filter"
+          value={filter}
+          onChange={this.handleFilterChange}
+        />
+
+        <Contacts
+          titleName={'Contacts'}
+          contacts={filteredContacts}
+          onDelete={this.handleDelete}
+        />
       </form>
     );
   }

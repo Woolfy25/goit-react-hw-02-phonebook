@@ -1,15 +1,16 @@
 import React from 'react';
-// import css from './Form.module.css';
+import css from './Contacts.module.css';
 import PropTypes from 'prop-types';
 
-const Contacts = ({ titleName, contacts, ids }) => {
+const Contacts = ({ titleName, contacts, onDelete }) => {
   return (
     <div>
-      <h2>{titleName}</h2>
-      <ul>
+      <h2 className={css.contactsTitle}>{titleName}</h2>
+      <ul className={css.contactsLists}>
         {contacts.map(contact => (
           <li key={contact.id}>
             {contact.name}: {contact.number}
+            <button onClick={() => onDelete(contact.id)}>Delete</button>
           </li>
         ))}
       </ul>
