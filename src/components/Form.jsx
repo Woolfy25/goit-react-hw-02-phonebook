@@ -41,7 +41,6 @@ class Form extends React.Component {
   };
 
   render() {
-    const {} = this.props;
     const { contacts } = this.state;
     return (
       <form onSubmit={this.handleSubmit}>
