@@ -17,6 +17,7 @@ export const App = () => {
         flexDirection: 'column',
       }}
     >
+      Testing
       <Title title={'Phonebook'} />
       <Form test="testing"></Form>
     </div>
